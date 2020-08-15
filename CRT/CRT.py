@@ -15,16 +15,20 @@ def Inverse(number, modulo):
 	number %= modulo
 	if not CoprimeCheck(int(number), int(modulo)):
 		return 0;
-		
-	k = 0
+
+	x0, y0, x1, y1 = 0, 1, 1, 0
 	while True:
-		inverseMod = (modulo * k + 1) % number
-		inverse = (modulo * k + 1) / number
-		if inverseMod == 0:
-			return int(inverse)
-		else:
-			k += 1
-			
+		q, r = modulo // number, modulo % number
+		x0, x1 = x1, x0 - q * x1
+		y0, y1 = y1, y0 - q * y1
+
+		if r == 0:
+			break
+
+		modulo, number = number, r
+
+	return (x0, y0)
+
 def CRT(nList, cList):
 	if len(nList) != len(cList):
 		print('Length of N and C invalid')
@@ -32,16 +36,20 @@ def CRT(nList, cList):
 	elif len(nList) == 0:
 		print('Empty')
 		return
-	
+
 	N = 1
 	Sum = 0
 	for n in nList:
 		N *= n
-		
+
 	for i in range(len(cList)):
 		Ni = Fraction(N, nList[i])
-		Sum += cList[i] * Ni * Inverse(Ni, nList[i])
-		
+		Inv = Inverse(Ni, nList[i])[0]
+		if Inv < 0:
+			Inv += nList[i]
+
+		Sum += cList[i] * Ni * Inv
+
 	print(int(Sum % N))
 	
 nList = [10807,33109,44923]
