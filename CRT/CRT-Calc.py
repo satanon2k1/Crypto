@@ -1,4 +1,4 @@
-/*
+'''
 Have e, n and dp (mean d mod p-1, d is private key). Proof:
 - We have d = (1/e) mod (p-1)(q-1) and dp = d mod p-1
 ==> dp = ((1/e) mod (p-1)(q-1)) mod p-1
@@ -6,7 +6,7 @@ Have e, n and dp (mean d mod p-1, d is private key). Proof:
 <=> e * dp = 1 mod p-1
 <=> e * dp - 1 = k * (p-1)
 <=> p = (e * dp - 1 + k) / k
-*/
+'''
 
 def get_prime(n,e,dp):
 	for k in range(2,e):
