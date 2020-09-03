@@ -1,5 +1,3 @@
-from fractions import Fraction
-
 def ContinuedFraction(e, n):
 	result = []
 	while True:
@@ -9,17 +7,14 @@ def ContinuedFraction(e, n):
 			return result
 		n, e = e, r
 
-def Recursive(cf, first, i):
-	if first <= i:
-		return Fraction(1, cf[first] + Recursive(cf, first + 1, i))
-	else:
-		return 0
-
 def Convergents(cf):
 	result = []
 	for i in range(len(cf)):
-		node = Recursive(cf, 0, i)
-		result.append(node)
+		k, d = 1, cf[i]
+		for j in range(i - 1, -1, -1):
+			tmp_k, tmp_d = k, d
+			k, d = tmp_d, tmp_k + tmp_d * cf[j]
+		result.append((k, d))
 	return result
 
 def main(e, n):
@@ -28,7 +23,7 @@ def main(e, n):
 	q0 = 1
 	c = pow(8101, e, n)
 	for i in conv:
-		q1 = i.denominator
+		k, q1 = i
 		if pow(c, q1, n) == 8101:
 			return q1
 		else:
