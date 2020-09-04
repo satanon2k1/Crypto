@@ -1,19 +1,19 @@
 from fractions import Fraction
 
-def CoprimeCheck(number1, number2):
-	lowerNumber = number1
+def GCD(number1, number2):
+	if number1 == 0:
+		return number2
+	if number2 == 0:
+		return number1
+	if number1 == number2:
+		reuturn number1
 	if number1 > number2:
-		lowerNumber = number2
-		
-	for i in range(2, lowerNumber+1):
-		if number1 % i == 0 and number2 % i == 0:
-			return False
-			
-	return True
+		return GCD(number1 - number2, number2)
+	return GCD(number1, number2 - number1)
 
 def Inverse(number, modulo):
 	number %= modulo
-	if not CoprimeCheck(int(number), int(modulo)):
+	if GCD(int(number), int(modulo)) != 1:
 		return 0;
 
 	x0, y0, x1, y1 = 0, 1, 1, 0
