@@ -35,8 +35,8 @@ def t1(c, n, conv):
 			print(q1)
 			return
 		else:
-			for r in range(1, 30):
-				for s in range(1, 30):
+			for r in range(1, 15):
+				for s in range(1, 15):
 					d = r * q1 + s * q0
 					if pow(c, d, n) == 8101:
 						print(d)
@@ -54,8 +54,8 @@ def t2(c, n, conv):
 			print(q1)
 			return
 		else:
-			for r in range(1, 30):
-				for s in range(1, 30):
+			for r in range(15, 30):
+				for s in range(15, 30):
 					d = r * q1 + s * q0
 					if pow(c, d, n) == 8101:
 						print(d)
@@ -66,8 +66,8 @@ cf = ContinuedFraction(e, n)
 conv = Convergents(cf)
 c = pow(8101, e, n)
 
-thread1 = threading.Thread(target=t1, args=(c, n, conv[::2],))
-thread2 = threading.Thread(target=t2, args=(c, n, conv[1::2],))
+thread1 = threading.Thread(target=t1, args=(c, n, conv,))
+thread2 = threading.Thread(target=t2, args=(c, n, conv,))
 
 thread1.start()
 thread2.start()
