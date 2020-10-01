@@ -35,8 +35,8 @@ def t1(c, n, conv):
 			print(q1)
 			return
 		else:
-			for r in range(1, 15):
-				for s in range(1, 15):
+			for r in range(1, 11):
+				for s in range(1, 11):
 					d = r * q1 + s * q0
 					if pow(c, d, n) == 8101:
 						print(d)
@@ -54,8 +54,46 @@ def t2(c, n, conv):
 			print(q1)
 			return
 		else:
-			for r in range(15, 30):
-				for s in range(15, 30):
+			for r in range(11, 21):
+				for s in range(11, 21):
+					d = r * q1 + s * q0
+					if pow(c, d, n) == 8101:
+						print(d)
+						return
+			q0 = q1
+
+def t3(c, n, conv):
+	q0 = 1
+	for i in conv:
+		k, q1 = i
+		if q1 > isqrt(isqrt(n)):
+			print(None)
+			return
+		if pow(c, q1, n) == 8101:
+			print(q1)
+			return
+		else:
+			for r in range(21, 31):
+				for s in range(21, 31):
+					d = r * q1 + s * q0
+					if pow(c, d, n) == 8101:
+						print(d)
+						return
+			q0 = q1
+
+def t4(c, n, conv):
+	q0 = 1
+	for i in conv:
+		k, q1 = i
+		if q1 > isqrt(isqrt(n)):
+			print(None)
+			return
+		if pow(c, q1, n) == 8101:
+			print(q1)
+			return
+		else:
+			for r in range(31, 41):
+				for s in range(31, 41):
 					d = r * q1 + s * q0
 					if pow(c, d, n) == 8101:
 						print(d)
@@ -68,9 +106,15 @@ c = pow(8101, e, n)
 
 thread1 = threading.Thread(target=t1, args=(c, n, conv,))
 thread2 = threading.Thread(target=t2, args=(c, n, conv,))
+thread3 = threading.Thread(target=t3, args=(c, n, conv,))
+thread4 = threading.Thread(target=t4, args=(c, n, conv,))
 
 thread1.start()
 thread2.start()
+thread3.start()
+thread4.start()
 
 thread1.join()
 thread2.join()
+thread3.join()
+thread4.join()
