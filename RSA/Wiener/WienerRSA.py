@@ -1,4 +1,4 @@
-import threading
+import multiprocessing as mp
 from math import isqrt
 
 n = 0x665166804cd78e8197073f65f58bca14e019982245fcc7cad74535e948a4e0258b2e919bf3720968a00e5240c5e1d6b8831d8fec300d969fccec6cce11dde826d3fbe0837194f2dc64194c78379440671563c6c75267f0286d779e6d91d3e9037c642a860a894d8c45b7ed564d341501cedf260d3019234f2964ccc6c56b6de8a4f66667e9672a03f6c29d95100cdf5cb363d66f2131823a953621680300ab3a2eb51c12999b6d4249dde499055584925399f3a8c7a4a5a21f095878e80bbc772f785d2cbf70a87c6b854eb566e1e1beb7d4ac6eb46023b3dc7fdf34529a40f5fc5797f9c15c54ed4cb018c072168e9c30ca3602e00ea4047d2e5686c6eb37b9
@@ -104,17 +104,13 @@ cf = ContinuedFraction(e, n)
 conv = Convergents(cf)
 c = pow(8101, e, n)
 
-thread1 = threading.Thread(target=t1, args=(c, n, conv,))
-thread2 = threading.Thread(target=t2, args=(c, n, conv,))
-thread3 = threading.Thread(target=t3, args=(c, n, conv,))
-thread4 = threading.Thread(target=t4, args=(c, n, conv,))
+if __name__ == "__main__":
+	p1 = mp.Process(target=t1, args=(c, n, conv,))
+	p2 = mp.Process(target=t2, args=(c, n, conv,))
+	p3 = mp.Process(target=t3, args=(c, n, conv,))
+	p4 = mp.Process(target=t4, args=(c, n, conv,))
 
-thread1.start()
-thread2.start()
-thread3.start()
-thread4.start()
-
-thread1.join()
-thread2.join()
-thread3.join()
-thread4.join()
+	p1.start()
+	p2.start()
+	p3.start()
+	p4.start()
