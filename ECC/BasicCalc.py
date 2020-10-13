@@ -46,14 +46,16 @@ def SumAList(PointList):
 
 def Multi(P, n):
 	tmp = {"x": 0, "y": 0}
-	for i in range(n):
-		tmp = SumTwoPoint(tmp, P)
-		if tmp is False:
-			return False
+	while n > 0:
+		if n % 2 == 1:
+			tmp = SumTwoPoint(tmp, P)
+		P = SumTwoPoint(P, P)
+		n = n // 2
 	return tmp
 
-P = {"x": 493, "y": 5564}
-Q = {"x": 1539, "y": 4742}
+P = {"x": 4726, "y": 6287}
+Q = {"x": 4726, "y": 3452}
 R = {"x": 4403, "y": 5202}
 
-print(SumAList([Multi(P, 2), Q, R])) # P + P + Q + R
+print(Multi(P, 6534))
+print(Multi(Q, 6534))
