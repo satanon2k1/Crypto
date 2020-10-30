@@ -24,7 +24,7 @@ def Convergents(cf):
 		result.append((k, d))
 	return result
 
-def t1(c, n, conv):
+def run(num):
 	q0 = 1
 	for i in conv:
 		k, q1 = i
@@ -35,65 +35,8 @@ def t1(c, n, conv):
 			print(q1)
 			return
 		else:
-			for r in range(1, 11):
-				for s in range(1, 11):
-					d = r * q1 + s * q0
-					if pow(c, d, n) == 8101:
-						print(d)
-						return
-			q0 = q1
-
-def t2(c, n, conv):
-	q0 = 1
-	for i in conv:
-		k, q1 = i
-		if q1 > isqrt(isqrt(n)):
-			print(None)
-			return
-		if pow(c, q1, n) == 8101:
-			print(q1)
-			return
-		else:
-			for r in range(11, 21):
-				for s in range(11, 21):
-					d = r * q1 + s * q0
-					if pow(c, d, n) == 8101:
-						print(d)
-						return
-			q0 = q1
-
-def t3(c, n, conv):
-	q0 = 1
-	for i in conv:
-		k, q1 = i
-		if q1 > isqrt(isqrt(n)):
-			print(None)
-			return
-		if pow(c, q1, n) == 8101:
-			print(q1)
-			return
-		else:
-			for r in range(21, 31):
-				for s in range(21, 31):
-					d = r * q1 + s * q0
-					if pow(c, d, n) == 8101:
-						print(d)
-						return
-			q0 = q1
-
-def t4(c, n, conv):
-	q0 = 1
-	for i in conv:
-		k, q1 = i
-		if q1 > isqrt(isqrt(n)):
-			print(None)
-			return
-		if pow(c, q1, n) == 8101:
-			print(q1)
-			return
-		else:
-			for r in range(31, 41):
-				for s in range(31, 41):
+			for r in range(num, num + 10):
+				for s in range(num, num + 10):
 					d = r * q1 + s * q0
 					if pow(c, d, n) == 8101:
 						print(d)
@@ -105,12 +48,10 @@ conv = Convergents(cf)
 c = pow(8101, e, n)
 
 if __name__ == "__main__":
-	p1 = mp.Process(target=t1, args=(c, n, conv,))
-	p2 = mp.Process(target=t2, args=(c, n, conv,))
-	p3 = mp.Process(target=t3, args=(c, n, conv,))
-	p4 = mp.Process(target=t4, args=(c, n, conv,))
+	processes = []
+	for i in range(4):
+		process = mp.Process(target = run, args = (i * 10 + 1,))
+		processes.append(process)
 
-	p1.start()
-	p2.start()
-	p3.start()
-	p4.start()
+	for process in processes:
+		process.start()
