@@ -36,4 +36,4 @@ for i in range(keyLength):
 print("key: {}".format(key))
 plaintext = b""
 plaintext += bytes([ciphertext[i] ^ key[i % keyLength] for i in range(cipherLength)])
-print("plaintext: {}".format(plaintext)
+print("plaintext: {}".format(plaintext))
