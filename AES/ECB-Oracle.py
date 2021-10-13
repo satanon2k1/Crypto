@@ -1,18 +1,17 @@
 import requests as req
-import json as js
+import sys
 
-url = 'http://aes.cryptohack.org/ecb_oracle/encrypt/'
-index = 31
-text = ''
+url = 'http://125.235.240.166:20104/encrypt'
+index = 47
+text = b''
 
-for char in range(25):
-	templateCipher = js.loads(req.get(url + ('x' * index).encode('hex') + '/').text)['ciphertext'][:64]
-	for i in range(126, 31, -1):
-		templateText = 'x' * index + text + chr(i)
-		res = js.loads(req.get(url + templateText.encode('hex') + '/').text)['ciphertext'][:64]
-		if res == templateCipher:
-			text += chr(i)
-			index -= 1
-			break
-
-print text
+for char in range(36):
+    templateCipher = req.post(url, data = {"input": (b'x' * index).hex()}).text[:96]
+    for i in range(126, 31, -1):
+        templateText = b'x' * index + text + bytes([i])
+        res = req.post(url, data = {"input": templateText.hex()}).text[:96]
+        if res == templateCipher:
+            text += bytes([i])
+            index -= 1
+            print(text)
+            break
